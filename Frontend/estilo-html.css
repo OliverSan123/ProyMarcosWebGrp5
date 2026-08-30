@@ -1,0 +1,24 @@
+.resumen-tickets{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    content-aling: space-between; 
+    justify-items: center;
+}
+
+main{
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    
+}
+
+.detalles{
+    display: grid;
+    grid-template-row: 1fr 3fr;
+    
+}
+
+.actividad{
+    display:grid;
+    grid-template-row: 3fr 1fr;
+}
