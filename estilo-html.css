@@ -1,3 +1,8 @@
+.cabecera {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
 .resumen-tickets{
     display: flex;
     gap: 20px;
@@ -6,11 +11,21 @@
     justify-content: center;
 }
 
-main{
+.card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    flex: 1;
+    min-width: 150px;
+}
+
+.main{
     display: grid;
     grid-template-columns: 4fr 1fr;
     grid-template-areas: "detalles actividad";
-    
+    gap: 20px;
+    padding: 20px;
 }
 
 .detalles{
