@@ -24,6 +24,7 @@
         <!--FORMULARIO DE INGRESO-->
         <div class="formulario">
             <form>
+                
                 <!--bootstrap-->
                 <div class="form-group">
                     <!--bootstrap-->
@@ -32,6 +33,7 @@
                         placeholder="Ingrese su usuario">
 
                 </div>
+
                 <!--bootstrap-->
                 <div class="form-group">
                     <!--bootstrap-->
@@ -43,18 +45,34 @@
                         más.
                     </small>
                 </div>
+
                 <!--bootstrap-->
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="RecordarUsuario">
+                    <input type="checkbox" class="form-check-input" id="RecordarUsuario" data-bs-toggle="modal" data-bs-target="#miModal">
                     <label class="form-check-label" for="recordarUsuario">Recuérdame</label>
                 </div>
+
                 <!--bootstrap-->
                 <div class="d-grid">
-                    <button class="btn btn-primary" type="button">INGRESAR</button>
+                    <a href="dashboard.html" class="btn btn-info" role="button">
+                        Ingresar
+                    </a>
                 </div>
+
+                <!--bootstrap-->
+                <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true"
+                    style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">USUARIO Y CONTRASEÑA GUARDADOS</div>
+                        </div>
+                    </div>
+                </div>
+
             </form>
         </div>
     </main>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
