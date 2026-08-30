@@ -2,19 +2,27 @@
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
-    justify-content: space-between;
+    align-content: space-between; 
+    justify-content: center;
+}
+
+main{
     display: grid;
     grid-template-columns: 4fr 1fr;
+    grid-template-areas: "detalles actividad";
     
 }
 
 .detalles{
+
     display: grid;
     grid-template-rows: 1fr 3fr;
+    grid-area: detalles;
     
 }
 
 .actividad{
     display:grid;
     grid-template-rows: 3fr 1fr;
+    grid-area: actividad;
 }
