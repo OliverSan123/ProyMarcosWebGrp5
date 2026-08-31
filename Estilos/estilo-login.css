@@ -10,8 +10,10 @@ body {
 }
 
 .company-logo {
-    max-width: 390px;
-    max-height: 170px;
+    display: block;
+    width: min(100%, 280px);
+    max-width: 280px;
+    height: auto;
     object-fit: contain;
 }
 
@@ -42,6 +44,8 @@ body {
 
 @media (max-width: 991.98px) {
     .company-logo {
-        max-width: 320px;
+        width: min(100%, 220px);
+        max-width: 220px;
+        margin-inline: auto;
     }
 }
