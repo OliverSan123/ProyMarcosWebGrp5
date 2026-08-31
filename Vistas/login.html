@@ -1,82 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="/Estilos/estilo-login.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iniciar sesión | Grupo Norte</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../Estilos/estilo-login.css">
 </head>
 
 <body>
-
-    <main>
-        <!--LOGO-->
-        <div class="logo">
-            <!--bootstrap-->
-            <img src="/Imagenes/logoEmpresa.png" class="float-start img-fluid" alt="Logo-empresa">
-        </div>
-
-
-        <!--FORMULARIO DE INGRESO-->
-        <div class="formulario">
-            <form>
-
-                <!--bootstrap-->
-                <div class="form-group">
-                    <!--bootstrap-->
-                    <label for="User" class="fw-bold">Usuario</label>
-                    <input type="text" class="form-control" id="user" aria-describedby="userHelp"
-                        placeholder="Ingrese su usuario">
-
-                </div>
-
-                <!--bootstrap-->
-                <div class="form-group">
-                    <!--bootstrap-->
-                    <label for="Password" class="fw-bold">Contraseña</label>
-                    <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
-                    <!--bootstrap-->
-                    <small id="emailHelp" class="form-text text-muted">
-                        No compartas tu contraseña con alguien
-                        más.
-                    </small>
-                </div>
-
-                <!--bootstrap-->
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="RecordarUsuario" data-bs-toggle="modal"
-                        data-bs-target="#miModal">
-                    <label class="form-check-label" for="recordarUsuario">Recuérdame</label>
-                </div>
-
-                <!--bootstrap-->
-                <div class="d-grid">
-                    <a href="/Vistas/dashboard.html" class="btn btn-info" role="button">
-                        Ingresar
-                    </a>
-                </div>
-
-                <!--bootstrap-->
-                <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true"
-                    style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-body">USUARIO Y CONTRASEÑA GUARDADOS</div>
-                        </div>
-                    </div>
-                </div>
-
+  <main class="container py-4 py-lg-5">
+    <div class="row min-vh-100 align-items-center justify-content-center g-4 g-lg-5">
+      <section class="col-lg-6 text-center text-lg-start" aria-labelledby="tituloSistema">
+        <img class="img-fluid company-logo mb-4" src="../Imagenes/logoEmpresa.png" alt="Logo de Grupo Norte S.A.">
+        <p class="text-uppercase fw-bold small text-primary-emphasis letter-spacing mb-2">Sistema interno de soporte</p>
+        <h1 id="tituloSistema" class="display-5 fw-bold text-dark">Mesa de Ayuda TI</h1>
+        <p class="lead text-secondary mb-4">Centraliza solicitudes, define prioridades y da seguimiento a cada ticket.
+        </p>
+        <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-2"><span
+            class="badge rounded-pill text-bg-light border px-3 py-2">Prioridades</span><span
+            class="badge rounded-pill text-bg-light border px-3 py-2">Asignación</span><span
+            class="badge rounded-pill text-bg-light border px-3 py-2">SLA interno</span></div>
+      </section>
+      <section class="col-sm-10 col-md-8 col-lg-5" aria-labelledby="tituloLogin">
+        <div class="card border-0 shadow login-card">
+          <div class="card-body p-4 p-md-5">
+            <h2 id="tituloLogin" class="h3 fw-bold mb-1">Bienvenido</h2>
+            <p class="text-secondary mb-4">Ingresa con tus credenciales corporativas.</p>
+            <form id="loginForm" novalidate>
+              <div class="mb-3"><label for="user" class="form-label fw-semibold">Usuario o correo</label><input
+                  type="text" class="form-control form-control-lg" id="user" placeholder="ej. maria.luna" required
+                  autocomplete="username">
+                <div class="invalid-feedback">Ingresa tu usuario corporativo.</div>
+              </div>
+              <div class="mb-3"><label for="password" class="form-label fw-semibold">Contraseña</label>
+                <div class="input-group"><input type="password" class="form-control form-control-lg" id="password"
+                    placeholder="Ingresa tu contraseña" required autocomplete="current-password"><button
+                    class="btn btn-outline-secondary" type="button" id="togglePassword"
+                    aria-label="Mostrar contraseña">Ver</button></div>
+                <div class="invalid-feedback">Ingresa tu contraseña.</div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="form-check"><input class="form-check-input" type="checkbox" id="remember"><label
+                    class="form-check-label small" for="remember">Recordarme</label></div><a href="#"
+                  class="small text-decoration-none" data-bs-toggle="modal" data-bs-target="#supportModal">¿Necesitas
+                  ayuda?</a>
+              </div><button class="btn btn-primary btn-lg w-100" type="submit">Ingresar al sistema</button>
+              <p class="text-center small text-secondary mt-4 mb-0">Prototipo académico - Avance 1</p>
             </form>
+          </div>
         </div>
-    </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+      </section>
+    </div>
+  </main>
+  <div class="modal fade" id="supportModal" tabindex="-1" aria-labelledby="supportTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="supportTitle">Soporte de acceso</h2><button type="button" class="btn-close"
+            data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">Comunícate con el área de TI para restablecer tus credenciales corporativas.</div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../App/javascript.js"></script>
 </body>
 
 </html>

@@ -1,171 +1,303 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="/Estilos/estilo-dashboard.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel de tickets | Grupo Norte</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../Estilos/estilo-dashboard.css">
 </head>
 
 <body>
-
-    <div class="cabecera">
-        <h2>Dashboard</h2>
-        <!--bootstrap-->
-        <p class="fw-bold">Estados tickets</p>
-
-        <div class="resumen-tickets">
-            <div class="card">
-                Tarjeta 1
-            </div>
-            <div class="card">
-                Tarjeta 2
-            </div>
-            <div class="card">
-                Tarjeta 3
-            </div>
-            <div class="card">
-                Tarjeta 4
-            </div>
-        </div>
+  <nav class="navbar navbar-expand-lg navbar-dark app-nav">
+    <div class="container"><a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="dashboard.html"><img
+          src="../Imagenes/logoEmpresa.png" alt="Grupo Norte" class="nav-logo"><span>Mesa de Ayuda TI</span></a><button
+        class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu"
+        aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link active" href="dashboard.html">Tickets</a></li>
+          <li class="nav-item"><a class="nav-link" href="#sla">SLA interno</a></li>
+          <li class="nav-item ms-lg-3"><a class="btn btn-light btn-sm px-3" href="login.html">Cerrar sesión</a></li>
+        </ul>
+      </div>
     </div>
-
-    <div class="main">
-        <div class="detalles">
-            <div class="card p-3 shadow-sm border-0">
-                <div class="row g-2">
-                    <div class="col-md-3">
-                        <select class="form-select form-select-sm">
-                            <option selected>Filtrar por Área...</option>
-                            <option>Contabilidad</option>
-                            <option>Ventas</option>
-                            <option>Sistemas</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-select form-select-sm">
-                            <option selected>Filtrar por Prioridad...</option>
-                            <option>Alta</option>
-                            <option>Media</option>
-                            <option>Baja</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-select form-select-sm">
-                            <option selected>Filtrar por Estado...</option>
-                            <option>Nuevo</option>
-                            <option>En Atención</option>
-                            <option>Resuelto</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <button class="btn btn-primary btn-sm w-100">Filtrar</button>
-                    </div>
-                </div>
-            </div>
-            <div class="detalles-agente">
-                <!--bootstrap-->
-                <p class="fw-bold">Detalle agente</p>
-
-                <!--bootstrap-->
-                <div class="container-fluid">
-                    <table class="table table-hover">
-                        <thead>
-                            <!--bootstrap-->
-                            <tr class="table-primary">
-                                <th>Técnico</th>
-                                <th>Tiempo</th>
-                                <th>Resolución</th>
-                                <th>Tickets</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Dato 1</td>
-                                <td>Dato 2</td>
-                                <td>Dato 3</td>
-                                <td>Dato 4</td>
-                            </tr>
-                            <tr>
-                                <td>Dato 1</td>
-                                <td>Dato 2</td>
-                                <td>Dato 3</td>
-                                <td>Dato 4</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="detalles-ticket">
-                <!--bootstrap-->
-                <p class="fw-bold">Detalle ticket</p>
-                <!--bootstrap-->
-                <div class="container-fluid">
-                    <table class="table table-hover">
-                        <thead>
-                            <!--bootstrap-->
-                            <tr class="table-primary">
-                                <th># Ticket</th>
-                                <th>Cliente</th>
-                                <th>Prioridad</th>
-                                <th>Técnico</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Dato 1</td>
-                                <td>Dato 2</td>
-                                <td>Dato 3</td>
-                                <td>Dato 4</td>
-                                <td>Dato 5</td>
-                            </tr>
-                            <tr>
-                                <td>Dato 1</td>
-                                <td>Dato 2</td>
-                                <td>Dato 3</td>
-                                <td>Dato 4</td>
-                                <td>Dato 5</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="actividad">
-            <div class="actividad-reciente">
-                <!--bootstrap-->
-                <p class="fw-bold">Reciente</p>
-
-                <div class="resumen-actividad">
-                    <div class="card-activiti">
-                        Actividad 1
-                    </div>
-                    <div class="card-activiti">
-                        Actividad 2
-                    </div>
-                    <div class="card-activiti">
-                        Actividad 3
-                    </div>
-                    <div class="card-activiti">
-                        Actividad 4
-                    </div>
-                </div>
-            </div>
-            <div class="actividad-porcentaje">
-                <!--bootstrap-->
-                <p class="fw-bold">Porcentaje</p>
-                <div class="logo">
-                    <!--bootstrap-->
-                    <img src="/Imagenes/porcentaje.png" class="float-start img-fluid" alt="Logo-empresa">
-                </div>
-
-            </div>
-        </div>
+  </nav>
+  <main class="container py-4 py-lg-5">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+      <div>
+        <p class="eyebrow mb-1">PANEL DE COORDINACIÓN</p>
+        <h1 class="h2 fw-bold mb-1">Tickets de soporte</h1>
+        <p class="text-secondary mb-0">Consulta prioridades, responsables y vencimientos del servicio.</p>
+      </div><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ticketModal">+ Registrar
+        ticket</button>
     </div>
-
+    <section class="row g-3 mb-4" aria-label="Resumen de tickets">
+      <div class="col-6 col-lg-3">
+        <article class="metric-card"><span class="metric-icon bg-primary-subtle text-primary">N</span>
+          <div>
+            <p>Nuevos</p><strong id="countNew">0</strong>
+          </div>
+        </article>
+      </div>
+      <div class="col-6 col-lg-3">
+        <article class="metric-card"><span class="metric-icon bg-warning-subtle text-warning-emphasis">A</span>
+          <div>
+            <p>En atención</p><strong id="countActive">0</strong>
+          </div>
+        </article>
+      </div>
+      <div class="col-6 col-lg-3">
+        <article class="metric-card"><span class="metric-icon bg-danger-subtle text-danger">!</span>
+          <div>
+            <p>Por vencer</p><strong id="countRisk">0</strong>
+          </div>
+        </article>
+      </div>
+      <div class="col-6 col-lg-3">
+        <article class="metric-card"><span class="metric-icon bg-success-subtle text-success">✓</span>
+          <div>
+            <p>Resueltos</p><strong id="countDone">0</strong>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="card border-0 shadow-sm mb-4">
+      <div class="card-body p-3 p-lg-4">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-4"><label class="form-label small fw-semibold" for="searchTicket">Buscar</label><input
+              class="form-control" id="searchTicket" placeholder="Código, asunto o solicitante"></div>
+          <div class="col-6 col-md-2"><label class="form-label small fw-semibold"
+              for="filtroPrioridad">Prioridad</label><select class="form-select" id="filtroPrioridad">
+              <option value="">Todas</option>
+              <option>Crítica</option>
+              <option>Alta</option>
+              <option>Media</option>
+              <option>Baja</option>
+            </select></div>
+          <div class="col-6 col-md-2"><label class="form-label small fw-semibold"
+              for="filtroEstado">Estado</label><select class="form-select" id="filtroEstado">
+              <option value="">Todos</option>
+              <option>Nuevo</option>
+              <option>Asignado</option>
+              <option>En atención</option>
+              <option>Pendiente usuario</option>
+              <option>Resuelto</option>
+            </select></div>
+          <div class="col-6 col-md-2"><label class="form-label small fw-semibold" for="filtroArea">Área</label><select
+              class="form-select" id="filtroArea">
+              <option value="">Todas</option>
+              <option>Finanzas</option>
+              <option>Operaciones</option>
+              <option>Comercial</option>
+              <option>Recursos Humanos</option>
+            </select></div>
+          <div class="col-6 col-md-2"><button class="btn btn-outline-primary w-100" id="clearFilters"
+              type="button">Limpiar</button></div>
+        </div>
+      </div>
+    </section>
+    <section class="card border-0 shadow-sm overflow-hidden">
+      <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between">
+        <div>
+          <h2 class="h5 fw-bold mb-1">Bandeja de tickets</h2>
+          <p class="small text-secondary mb-0" id="ticketResult">Cargando tickets...</p>
+        </div><span class="badge text-bg-light align-self-start">Datos de demostración</span>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Ticket</th>
+              <th>Área / solicitante</th>
+              <th>Prioridad</th>
+              <th>Responsable</th>
+              <th>Estado</th>
+              <th>Fecha objetivo</th>
+              <th><span class="visually-hidden">Acciones</span></th>
+            </tr>
+          </thead>
+          <tbody id="tablaTickets"></tbody>
+        </table>
+      </div>
+    </section>
+    <section id="sla" class="row g-4 mt-1">
+      <div class="col-lg-7">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+            <h2 class="h5 fw-bold">Regla de prioridad</h2>
+            <p class="text-secondary small">Propuesta inicial: la prioridad se obtiene combinando impacto y urgencia.
+            </p>
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered text-center mb-0">
+                <thead>
+                  <tr>
+                    <th>Impacto / urgencia</th>
+                    <th>Alta</th>
+                    <th>Media</th>
+                    <th>Baja</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Alto</th>
+                    <td class="table-danger">Crítica</td>
+                    <td class="table-warning">Alta</td>
+                    <td>Media</td>
+                  </tr>
+                  <tr>
+                    <th>Medio</th>
+                    <td class="table-warning">Alta</td>
+                    <td>Media</td>
+                    <td>Baja</td>
+                  </tr>
+                  <tr>
+                    <th>Bajo</th>
+                    <td>Media</td>
+                    <td>Baja</td>
+                    <td>Baja</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+            <h2 class="h5 fw-bold">SLA interno propuesto</h2>
+            <ul class="list-group list-group-flush small">
+              <li class="list-group-item px-0 d-flex justify-content-between"><span>Crítica</span><strong
+                  class="text-danger">4 horas</strong></li>
+              <li class="list-group-item px-0 d-flex justify-content-between"><span>Alta</span><strong
+                  class="text-warning-emphasis">8 horas</strong></li>
+              <li class="list-group-item px-0 d-flex justify-content-between"><span>Media</span><strong>24
+                  horas</strong></li>
+              <li class="list-group-item px-0 d-flex justify-content-between"><span>Baja</span><strong
+                  class="text-success">72 horas</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="ticketTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <form id="ticketForm" novalidate>
+          <div class="modal-header">
+            <div>
+              <h2 class="modal-title fs-5" id="ticketTitle">Registrar nuevo ticket</h2>
+              <p class="small text-secondary mb-0">La prioridad se calcula con impacto y urgencia.</p>
+            </div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-8"><label class="form-label" for="ticketSubject">Asunto</label><input
+                  class="form-control" id="ticketSubject" required
+                  placeholder="Ej. No puedo acceder al sistema de ventas">
+                <div class="invalid-feedback">Describe brevemente el incidente.</div>
+              </div>
+              <div class="col-md-4"><label class="form-label" for="ticketArea">Área</label><select class="form-select"
+                  id="ticketArea" required>
+                  <option value="">Selecciona...</option>
+                  <option>Finanzas</option>
+                  <option>Operaciones</option>
+                  <option>Comercial</option>
+                  <option>Recursos Humanos</option>
+                </select>
+                <div class="invalid-feedback">Selecciona un área.</div>
+              </div>
+              <div class="col-md-6"><label class="form-label" for="ticketImpact">Impacto</label><select
+                  class="form-select" id="ticketImpact" required>
+                  <option value="">Selecciona...</option>
+                  <option>Alto</option>
+                  <option>Medio</option>
+                  <option>Bajo</option>
+                </select></div>
+              <div class="col-md-6"><label class="form-label" for="ticketUrgency">Urgencia</label><select
+                  class="form-select" id="ticketUrgency" required>
+                  <option value="">Selecciona...</option>
+                  <option>Alta</option>
+                  <option>Media</option>
+                  <option>Baja</option>
+                </select></div>
+              <div class="col-12"><label class="form-label" for="ticketDescription">Descripción</label><textarea
+                  class="form-control" id="ticketDescription" rows="3" required
+                  placeholder="Indica qué ocurre y desde cuándo."></textarea>
+                <div class="invalid-feedback">Agrega una descripción del incidente.</div>
+              </div>
+              <div class="col-12">
+                <div class="alert alert-primary mb-0 py-2" id="priorityPreview">Selecciona impacto y urgencia para
+                  calcular la prioridad y SLA.</div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer"><button type="button" class="btn btn-light"
+              data-bs-dismiss="modal">Cancelar</button><button class="btn btn-primary" type="submit">Registrar
+              ticket</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="manageModal" tabindex="-1" aria-labelledby="manageTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="manageForm">
+          <div class="modal-header">
+            <div>
+              <h2 class="modal-title fs-5" id="manageTitle">Gestionar ticket</h2>
+              <p class="small text-secondary mb-0" id="manageCode"></p>
+            </div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <p class="fw-semibold mb-3" id="manageSubject"></p>
+            <div class="row g-3">
+              <div class="col-md-6"><label class="form-label" for="manageTechnician">Técnico asignado</label><select
+                  class="form-select" id="manageTechnician">
+                  <option>Sin asignar</option>
+                  <option>Ana Torres</option>
+                  <option>Carlos Rojas</option>
+                  <option>Kevin Díaz</option>
+                </select></div>
+              <div class="col-md-6"><label class="form-label" for="manageStatus">Estado</label><select
+                  class="form-select" id="manageStatus">
+                  <option>Nuevo</option>
+                  <option>Asignado</option>
+                  <option>En atención</option>
+                  <option>Pendiente usuario</option>
+                  <option>Resuelto</option>
+                </select></div>
+              <div class="col-12"><label class="form-label" for="manageComment">Comentario de
+                  seguimiento</label><textarea class="form-control" id="manageComment" rows="2"
+                  placeholder="Ej. Se contactó al usuario para validar el acceso."></textarea></div>
+              <div class="col-12">
+                <div class="border rounded p-3 bg-light-subtle">
+                  <p class="small text-uppercase fw-bold text-secondary mb-2">Historial de demostración</p>
+                  <ul id="ticketHistory" class="small mb-0 ps-3"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer"><button type="button" class="btn btn-light"
+              data-bs-dismiss="modal">Cancelar</button><button class="btn btn-primary" type="submit">Guardar
+              cambios</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="appToast" class="toast align-items-center text-bg-success border-0" role="status">
+      <div class="d-flex">
+        <div class="toast-body" id="toastMessage">Cambios guardados.</div><button type="button"
+          class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../App/javascript.js"></script>
 </body>
 
 </html>

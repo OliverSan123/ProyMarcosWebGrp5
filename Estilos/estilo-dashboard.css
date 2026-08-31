@@ -1,81 +1,115 @@
-
-p{
-    margin: 15px;
+:root {
+    --gn-navy: #12395a;
+    --gn-blue: #0d5f9e;
+    --gn-bg: #f4f7fb;
 }
 
-.cabecera {
-    padding: 20px;
-    margin-bottom: 20px;
+body {
+    background: var(--gn-bg);
+    color: var(--gn-navy);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-.resumen-tickets{
+.app-nav {
+    background: var(--gn-navy);
+    box-shadow: 0 2px 12px rgba(18, 57, 90, .16);
+}
+
+.nav-logo {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: .35rem;
+}
+
+.eyebrow {
+    color: var(--gn-blue);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+}
+
+.metric-card {
+    min-height: 105px;
+    padding: 1.1rem;
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    align-content: space-between; 
-    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    background: #fff;
+    border-radius: .9rem;
+    box-shadow: 0 3px 14px rgba(18, 57, 90, .07);
+}
+
+.metric-card p {
+    margin: 0;
+    color: #6c7b8a;
+    font-size: .82rem;
+}
+
+.metric-card strong {
+    font-size: 1.65rem;
+}
+
+.metric-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: .75rem;
+    font-weight: 800;
 }
 
 .card {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    flex: 1;
-    min-width: 150px;
+    border-radius: .9rem;
 }
 
-.main{
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    grid-template-areas: "detalles actividad";
-    gap: 20px;
-    padding: 20px;
+.table> :not(caption)>*>* {
+    padding: .9rem 1rem;
 }
 
-.detalles{
-
-    display: grid;
-    grid-template-rows: 1fr 3fr;
-    grid-area: detalles;
-    gap: 10px;
-    
+.table thead th {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #627386;
+    background: #f8fafc;
+    white-space: nowrap;
 }
 
-.detalles-agente,
-.detalles-ticket{
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+.ticket-code {
+    font-weight: 700;
+    color: var(--gn-blue);
+    font-size: .78rem;
 }
 
-.actividad{
-    display:grid;
-    grid-template-rows: 3fr 2fr;
-    grid-area: actividad;
-    gap:10px;
+.ticket-subject {
+    display: block;
+    max-width: 230px;
 }
 
-.actividad-reciente,
-.actividad-porcentaje{
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
+.badge {
+    font-weight: 600;
 }
 
-.resumen-actividad{
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-    justify-content: center;
+.btn-primary {
+    background: var(--gn-blue);
+    border-color: var(--gn-blue);
 }
 
-.card-activiti {
-    padding: 10px;
-    border-top: 1px solid #8f8e8e;
-    background-color: #f9f9f9;
-    flex: 1;
-    min-width: 150px;
+.btn-primary:hover,
+.btn-primary:focus {
+    background: #0a4d81;
+    border-color: #0a4d81;
+}
+
+@media (max-width: 576px) {
+    .table> :not(caption)>*>* {
+        padding: .75rem .7rem;
+    }
+
+    .nav-logo {
+        width: 28px;
+        height: 28px;
+    }
 }
