@@ -76,3 +76,5 @@ a.small.text-decoration-none::after {
 a.small.text-decoration-none:hover::after {
     width: 100%;
 }
+
+/* Lo pongo pa no olvidarme despues oki */
