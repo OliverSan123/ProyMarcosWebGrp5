@@ -1,0 +1,166 @@
+.metric-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}   
+
+.metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(13, 95, 158, 0.15);
+}
+
+.metric-card:active {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(13, 95, 158, 0.1);
+}
+
+/* Animación de entrada del contador */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Pulse del número fuerte */
+.metric-card strong {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* ANIMACION PARA BUSCADOR */
+#searchTicket:focus {
+    transform: scale(1.02);
+    border-color: #0d5f9e !important;
+    box-shadow: 0 0 0 3px rgba(13, 95, 158, 0.1), 0 4px 12px rgba(13, 95, 158, 0.15) !important;
+}
+
+#searchTicket:hover:not(:focus) {
+    border-color: #93c5fd !important;
+}
+
+#filtroPrioridad:focus {
+    transform: scale(1.02);
+    border-color: #0d5f9e !important;
+    box-shadow: 0 0 0 3px rgba(13, 95, 158, 0.1), 0 4px 12px rgba(13, 95, 158, 0.15) !important;
+}
+
+#filtroPrioridad:hover:not(:focus) {
+    border-color: #93c5fd !important;
+}
+
+#filtroEstado:focus {
+    transform: scale(1.02);
+    border-color: #0d5f9e !important;
+    box-shadow: 0 0 0 3px rgba(13, 95, 158, 0.1), 0 4px 12px rgba(13, 95, 158, 0.15) !important;
+}
+
+#filtroEstado:hover:not(:focus) {
+    border-color: #93c5fd !important;
+}
+
+#filtroArea:focus {
+    transform: scale(1.02);
+    border-color: #0d5f9e !important;
+    box-shadow: 0 0 0 3px rgba(13, 95, 158, 0.1), 0 4px 12px rgba(13, 95, 158, 0.15) !important;
+}
+
+#filtroArea:hover:not(:focus) {
+    border-color: #93c5fd !important;
+}
+
+/* ANIMACION PARA NAVBAR BRAND (LOGO Y TITULO) */
+.navbar-brand {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+}
+
+.navbar-brand .nav-logo {
+    animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transition: all 0.3s ease;
+}
+
+@keyframes spin {
+    from {
+        opacity: 0;
+        transform: rotateY(-180deg) scale(0);
+    }
+    to {
+        opacity: 1;
+        transform: rotateY(0) scale(1);
+    }
+}
+
+.navbar-brand span {
+    animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.navbar-brand:hover span {
+    color: #93c5fd;
+    text-shadow: 0 0 10px rgba(147, 197, 253, 0.5);
+}
+
+/* ANIMACION PARA FILAS DE TICKETS */
+#tablaTickets tr {
+    animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transition: all 0.3s ease;
+}
+
+#tablaTickets tr:nth-child(1) { animation-delay: 0.1s; }
+#tablaTickets tr:nth-child(2) { animation-delay: 0.20s; }
+#tablaTickets tr:nth-child(3) { animation-delay: 0.30s; }
+#tablaTickets tr:nth-child(4) { animation-delay: 0.40s; }
+#tablaTickets tr:nth-child(5) { animation-delay: 0.50s; }
+#tablaTickets tr:nth-child(n+6) { animation-delay: 0.60s; }
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animación del código del ticket */
+.ticket-code {
+    display: inline-block;
+    animation: pulse 2s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+/* Hover en filas de tickets */
+#tablaTickets tr:hover {
+    transform: translateX(5px);
+    background-color: rgba(13, 95, 158, 0.05);
+    box-shadow: -3px 0 8px rgba(13, 95, 158, 0.1);
+}
