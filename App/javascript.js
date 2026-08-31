@@ -1,3 +1,4 @@
+// Datos iniciales para mostrar ejemplos de tickets en la bandeja.
 const defaultTickets = [
   { id: 'TK-1048', subject: 'Acceso bloqueado a ERP', area: 'Finanzas', requester: 'María Luna', priority: 'Crítica', technician: 'Carlos Rojas', status: 'En atención', created: '2026-08-30T08:10:00', history: ['Ticket creado por María Luna.', 'Carlos Rojas inició la atención.'] },
   { id: 'TK-1047', subject: 'Impresora no responde', area: 'Operaciones', requester: 'Gonzalo Limaylla', priority: 'Alta', technician: 'Ana Torres', status: 'Asignado', created: '2026-08-30T07:20:00', history: ['Ticket creado por Gonzalo Limaylla.', 'Asignado a Ana Torres.'] },
@@ -5,17 +6,20 @@ const defaultTickets = [
   { id: 'TK-1045', subject: 'Actualización de datos de usuario', area: 'Recursos Humanos', requester: 'Diego Ruiz', priority: 'Baja', technician: 'Ana Torres', status: 'Resuelto', created: '2026-08-28T10:30:00', history: ['Ticket creado por Diego Ruiz.', 'Ticket resuelto por Ana Torres.'] }
 ];
 
+// Reglas del negocio: horas estimadas según la prioridad del ticket.
 const slaHours = { Crítica: 4, Alta: 8, Media: 24, Baja: 72 };
 const priorityMatrix = { 'Alto-Alta': 'Crítica', 'Alto-Media': 'Alta', 'Alto-Baja': 'Media', 'Medio-Alta': 'Alta', 'Medio-Media': 'Media', 'Medio-Baja': 'Baja', 'Bajo-Alta': 'Media', 'Bajo-Media': 'Baja', 'Bajo-Baja': 'Baja' };
 let tickets = JSON.parse(localStorage.getItem('gnTickets') || 'null') || defaultTickets;
 let selectedTicketId = null;
 
+// Función reutilizable para seleccionar elementos del DOM.
 const byId = (id) => document.getElementById(id);
 const escapeHTML = (value) => { const node = document.createElement('div'); node.textContent = value; return node.innerHTML; };
 const deadline = (ticket) => new Date(new Date(ticket.created).getTime() + slaHours[ticket.priority] * 3600000);
 const saveTickets = () => localStorage.setItem('gnTickets', JSON.stringify(tickets));
 const showToast = (message) => { byId('toastMessage').textContent = message; bootstrap.Toast.getOrCreateInstance(byId('appToast')).show(); };
 
+// Crea un badge dependiendo del tipo de estado o prioridad.
 function badge(text, type) {
   const colors = type === 'priority'
     ? { Crítica: 'text-bg-danger', Alta: 'text-bg-warning', Media: 'text-bg-info', Baja: 'text-bg-success' }
@@ -30,6 +34,7 @@ function deadlineText(ticket) {
   return `${deadline(ticket).toLocaleDateString('es-PE', { day: '2-digit', month: 'short' })} <small class="text-secondary">(${remaining} h)</small>`;
 }
 
+// Muestra los tickets filtrados en la tabla y actualiza los contadores del panel.
 function renderTickets() {
   const query = byId('searchTicket').value.toLowerCase().trim();
   const priority = byId('filtroPrioridad').value;
@@ -45,11 +50,13 @@ function renderTickets() {
   byId('countDone').textContent = tickets.filter((ticket) => ticket.status === 'Resuelto').length;
 }
 
+// Calcula la prioridad final a partir del impacto y la urgencia del ticket.
 function updatePriorityPreview() {
   const priority = priorityMatrix[`${byId('ticketImpact').value}-${byId('ticketUrgency').value}`];
   byId('priorityPreview').textContent = priority ? `Prioridad calculada: ${priority}. SLA objetivo: ${slaHours[priority]} horas.` : 'Selecciona impacto y urgencia para calcular la prioridad y SLA.';
 }
 
+// Abre el modal de gestión y carga los datos del ticket seleccionado.
 function openManagement(ticketId) {
   const ticket = tickets.find((item) => item.id === ticketId);
   if (!ticket) return;
@@ -63,8 +70,10 @@ function openManagement(ticketId) {
   bootstrap.Modal.getOrCreateInstance(byId('manageModal')).show();
 }
 
+// Inicializa eventos según la vista actual: login o dashboard.
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = byId('loginForm');
+  // Lógica del login: validar datos y guardar el usuario si se marca recordarme.
   if (loginForm) {
     const savedUser = localStorage.getItem('gnUser');
     if (savedUser) { byId('user').value = savedUser; byId('remember').checked = true; }
@@ -73,12 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  // Si no existe la tabla, no seguimos con la lógica del dashboard.
   if (!byId('tablaTickets')) return;
+
+  // Escuchamos cambios en los filtros y la búsqueda para actualizar la tabla en vivo.
   ['searchTicket', 'filtroPrioridad', 'filtroEstado', 'filtroArea'].forEach((id) => byId(id).addEventListener(id === 'searchTicket' ? 'input' : 'change', renderTickets));
   byId('clearFilters').addEventListener('click', () => { ['searchTicket', 'filtroPrioridad', 'filtroEstado', 'filtroArea'].forEach((id) => { byId(id).value = ''; }); renderTickets(); });
   byId('ticketImpact').addEventListener('change', updatePriorityPreview); byId('ticketUrgency').addEventListener('change', updatePriorityPreview);
   byId('tablaTickets').addEventListener('click', (event) => { const button = event.target.closest('.manage-ticket'); if (button) openManagement(button.dataset.ticketId); });
 
+  // Registro de un nuevo ticket mediante el modal.
   byId('ticketForm').addEventListener('submit', (event) => {
     event.preventDefault(); const form = event.currentTarget;
     if (!form.checkValidity()) { form.classList.add('was-validated'); return; }
@@ -87,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tickets.unshift(newTicket); saveTickets(); bootstrap.Modal.getInstance(byId('ticketModal')).hide(); form.reset(); form.classList.remove('was-validated'); updatePriorityPreview(); renderTickets(); showToast(`Ticket ${newTicket.id} registrado con prioridad ${priority} y SLA de ${slaHours[priority]} horas.`);
   });
 
+  // Actualiza los datos del ticket cuando se guarda un cambio desde gestión.
   byId('manageForm').addEventListener('submit', (event) => {
     event.preventDefault(); const ticket = tickets.find((item) => item.id === selectedTicketId); if (!ticket) return;
     const oldTechnician = ticket.technician; const oldStatus = ticket.status; const newTechnician = byId('manageTechnician').value; const newStatus = byId('manageStatus').value; const comment = byId('manageComment').value.trim();

@@ -10,8 +10,10 @@
 </head>
 
 <body>
+  <!-- Contenedor principal de la pantalla de login -->
   <main class="container py-4 py-lg-5">
     <div class="row min-vh-100 align-items-center justify-content-center g-4 g-lg-5">
+      <!-- Lado izquierdo: información del sistema -->
       <section class="col-lg-6 text-center text-lg-start" aria-labelledby="tituloSistema">
         <img class="img-fluid company-logo mb-4" src="../Imagenes/logoEmpresa.png" alt="Logo de Grupo Norte S.A.">
         <p class="text-uppercase fw-bold small text-primary-emphasis letter-spacing mb-2">Sistema interno de soporte</p>
@@ -23,11 +25,15 @@
             class="badge rounded-pill text-bg-light border px-3 py-2">Asignación</span><span
             class="badge rounded-pill text-bg-light border px-3 py-2">SLA interno</span></div>
       </section>
+
+      <!-- Lado derecho: formulario de inicio de sesión -->
       <section class="col-sm-10 col-md-8 col-lg-5" aria-labelledby="tituloLogin">
         <div class="card border-0 shadow login-card">
           <div class="card-body p-4 p-md-5">
             <h2 id="tituloLogin" class="h3 fw-bold mb-1">Bienvenido</h2>
             <p class="text-secondary mb-4">Ingresa con tus credenciales corporativas.</p>
+
+            <!-- Formulario con validación básica de Bootstrap -->
             <form id="loginForm" novalidate>
               <div class="mb-3"><label for="user" class="form-label fw-semibold">Usuario o correo</label><input
                   type="text" class="form-control form-control-lg" id="user" placeholder="ej. maria.luna" required
@@ -41,6 +47,8 @@
                     aria-label="Mostrar contraseña">Ver</button></div>
                 <div class="invalid-feedback">Ingresa tu contraseña.</div>
               </div>
+
+              <!-- Opciones extras del login -->
               <div class="d-flex justify-content-between align-items-center mb-4">
                 <div class="form-check"><input class="form-check-input" type="checkbox" id="remember"><label
                     class="form-check-label small" for="remember">Recordarme</label></div><a href="#"
@@ -54,6 +62,8 @@
       </section>
     </div>
   </main>
+
+  <!-- Modal de ayuda para recuperar acceso -->
   <div class="modal fade" id="supportModal" tabindex="-1" aria-labelledby="supportTitle" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

@@ -10,6 +10,7 @@
 </head>
 
 <body>
+  <!-- Barra de navegación principal del sistema -->
   <nav class="navbar navbar-expand-lg navbar-dark app-nav">
     <div class="container"><a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="dashboard.html"><img
           src="../Imagenes/logoEmpresa.png" alt="Grupo Norte" class="nav-logo"><span>Mesa de Ayuda TI</span></a><button
@@ -24,6 +25,8 @@
       </div>
     </div>
   </nav>
+
+  <!-- Contenido principal del panel -->
   <main class="container py-4 py-lg-5">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
       <div>
@@ -33,6 +36,8 @@
       </div><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ticketModal">+ Registrar
         ticket</button>
     </div>
+
+    <!-- Resumen de métricas del sistema -->
     <section class="row g-3 mb-4" aria-label="Resumen de tickets">
       <div class="col-6 col-lg-3">
         <article class="metric-card"><span class="metric-icon bg-primary-subtle text-primary">N</span>
@@ -63,6 +68,7 @@
         </article>
       </div>
     </section>
+    <!-- Filtros para buscar tickets por texto y categoría -->
     <section class="card border-0 shadow-sm mb-4">
       <div class="card-body p-3 p-lg-4">
         <div class="row g-3 align-items-end">
@@ -98,6 +104,7 @@
         </div>
       </div>
     </section>
+    <!-- Tabla principal donde se muestran los tickets -->
     <section class="card border-0 shadow-sm overflow-hidden">
       <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between">
         <div>
@@ -122,6 +129,7 @@
         </table>
       </div>
     </section>
+    <!-- Sección de SLA y reglas de prioridad -->
     <section id="sla" class="row g-4 mt-1">
       <div class="col-lg-7">
         <div class="card border-0 shadow-sm h-100">
@@ -183,6 +191,7 @@
       </div>
     </section>
   </main>
+  <!-- Modal para registrar un nuevo ticket -->
   <div class="modal fade" id="ticketModal" tabindex="-1" aria-labelledby="ticketTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -242,6 +251,7 @@
       </div>
     </div>
   </div>
+  <!-- Modal para gestionar un ticket existente -->
   <div class="modal fade" id="manageModal" tabindex="-1" aria-labelledby="manageTitle" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
