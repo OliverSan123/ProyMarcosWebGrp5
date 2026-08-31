@@ -4,7 +4,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #f8fbfe 0%, #e7f3fb 100%);
+    background: #ffffff;
     color: var(--gn-navy);
     font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
