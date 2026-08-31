@@ -34,15 +34,28 @@ function deadlineText(ticket) {
   return `${deadline(ticket).toLocaleDateString('es-PE', { day: '2-digit', month: 'short' })} <small class="text-secondary">(${remaining} h)</small>`;
 }
 
+const FILTER_IDS = ['searchTicket', 'filtroPrioridad', 'filtroEstado', 'filtroArea'];
+const PRIORITY_INPUTS = ['ticketImpact', 'ticketUrgency'];
+
 // Muestra los tickets filtrados en la tabla y actualiza los contadores del panel.
 function renderTickets() {
   const query = byId('searchTicket').value.toLowerCase().trim();
   const priority = byId('filtroPrioridad').value;
   const status = byId('filtroEstado').value;
   const area = byId('filtroArea').value;
-  const visible = tickets.filter((ticket) => (!query || `${ticket.id} ${ticket.subject} ${ticket.requester}`.toLowerCase().includes(query)) && (!priority || ticket.priority === priority) && (!status || ticket.status === status) && (!area || ticket.area === area));
 
-  byId('tablaTickets').innerHTML = visible.map((ticket) => `<tr><td><span class="ticket-code">${ticket.id}</span><span class="ticket-subject fw-semibold">${escapeHTML(ticket.subject)}</span></td><td>${ticket.area}<small class="d-block text-secondary">${escapeHTML(ticket.requester)}</small></td><td>${badge(ticket.priority, 'priority')}</td><td>${escapeHTML(ticket.technician)}</td><td>${badge(ticket.status, 'status')}</td><td>${deadlineText(ticket)}</td><td><button class="btn btn-sm btn-outline-primary manage-ticket" type="button" data-ticket-id="${ticket.id}">Ver / gestionar</button></td></tr>`).join('') || '<tr><td colspan="7" class="text-center text-secondary py-4">No se encontraron tickets con esos filtros.</td></tr>';
+  const visible = tickets.filter((ticket) => {
+    const matchesQuery = !query || `${ticket.id} ${ticket.subject} ${ticket.requester}`.toLowerCase().includes(query);
+    const matchesPriority = !priority || ticket.priority === priority;
+    const matchesStatus = !status || ticket.status === status;
+    const matchesArea = !area || ticket.area === area;
+    return matchesQuery && matchesPriority && matchesStatus && matchesArea;
+  });
+
+  byId('tablaTickets').innerHTML = visible.length
+    ? visible.map((ticket) => `<tr><td><span class="ticket-code">${ticket.id}</span><span class="ticket-subject fw-semibold">${escapeHTML(ticket.subject)}</span></td><td>${ticket.area}<small class="d-block text-secondary">${escapeHTML(ticket.requester)}</small></td><td>${badge(ticket.priority, 'priority')}</td><td>${escapeHTML(ticket.technician)}</td><td>${badge(ticket.status, 'status')}</td><td>${deadlineText(ticket)}</td><td><button class="btn btn-sm btn-outline-primary manage-ticket" type="button" data-ticket-id="${ticket.id}">Ver / gestionar</button></td></tr>`).join('')
+    : '<tr><td colspan="7" class="text-center text-secondary py-4">No se encontraron tickets con esos filtros.</td></tr>';
+
   byId('ticketResult').textContent = `Mostrando ${visible.length} de ${tickets.length} tickets`;
   byId('countNew').textContent = tickets.filter((ticket) => ticket.status === 'Nuevo').length;
   byId('countActive').textContent = tickets.filter((ticket) => ['Asignado', 'En atención', 'Pendiente usuario'].includes(ticket.status)).length;
@@ -86,10 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!byId('tablaTickets')) return;
 
   // Escuchamos cambios en los filtros y la búsqueda para actualizar la tabla en vivo.
-  ['searchTicket', 'filtroPrioridad', 'filtroEstado', 'filtroArea'].forEach((id) => byId(id).addEventListener(id === 'searchTicket' ? 'input' : 'change', renderTickets));
-  byId('clearFilters').addEventListener('click', () => { ['searchTicket', 'filtroPrioridad', 'filtroEstado', 'filtroArea'].forEach((id) => { byId(id).value = ''; }); renderTickets(); });
-  byId('ticketImpact').addEventListener('change', updatePriorityPreview); byId('ticketUrgency').addEventListener('change', updatePriorityPreview);
-  byId('tablaTickets').addEventListener('click', (event) => { const button = event.target.closest('.manage-ticket'); if (button) openManagement(button.dataset.ticketId); });
+  FILTER_IDS.forEach((id) => byId(id).addEventListener(id === 'searchTicket' ? 'input' : 'change', renderTickets));
+  byId('clearFilters').addEventListener('click', () => {
+    FILTER_IDS.forEach((id) => { byId(id).value = ''; });
+    renderTickets();
+  });
+  PRIORITY_INPUTS.forEach((id) => byId(id).addEventListener('change', updatePriorityPreview));
+  byId('tablaTickets').addEventListener('click', (event) => {
+    const button = event.target.closest('.manage-ticket');
+    if (button) openManagement(button.dataset.ticketId);
+  });
 
   // Registro de un nuevo ticket mediante el modal.
   byId('ticketForm').addEventListener('submit', (event) => {
