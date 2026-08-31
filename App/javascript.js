@@ -12,7 +12,7 @@ const priorityMatrix = { 'Alto-Alta': 'Crítica', 'Alto-Media': 'Alta', 'Alto-Ba
 let tickets = JSON.parse(localStorage.getItem('gnTickets') || 'null') || defaultTickets;
 let selectedTicketId = null;
 
-// Función reutilizable para seleccionar elementos del DOM.
+// Función reutilizable para seleccionar elementos del Modelo de Objetos.
 const byId = (id) => document.getElementById(id);
 const escapeHTML = (value) => { const node = document.createElement('div'); node.textContent = value; return node.innerHTML; };
 const deadline = (ticket) => new Date(new Date(ticket.created).getTime() + slaHours[ticket.priority] * 3600000);
