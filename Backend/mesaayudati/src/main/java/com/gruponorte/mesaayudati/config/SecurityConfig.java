@@ -1,6 +1,6 @@
 package com.gruponorte.mesaayudati.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import com.gruponorte.mesaayudati.repository.UserRepository;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import org.springframework.beans.factory.annotation.Value;
