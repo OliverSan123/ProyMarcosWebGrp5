@@ -37,19 +37,19 @@ public class InitialDataSeeder {
             createRuleIfMissing(priorityRuleRepository, priorityRepository, ImpactLevel.BAJO,
                     ImpactLevel.BAJO, "BAJA");
             createRuleIfMissing(priorityRuleRepository, priorityRepository, ImpactLevel.BAJO,
-                    ImpactLevel.MEDIO, "MEDIA");
+                    ImpactLevel.MEDIO, "BAJA");
             createRuleIfMissing(priorityRuleRepository, priorityRepository, ImpactLevel.BAJO,
                     ImpactLevel.ALTO, "MEDIA");
             createRuleIfMissing(priorityRuleRepository, priorityRepository, ImpactLevel.MEDIO,
-                    ImpactLevel.BAJO, "MEDIA");
+                    ImpactLevel.BAJO, "BAJA");
             createRuleIfMissing(priorityRuleRepository, priorityRepository, ImpactLevel.MEDIO,
-                    ImpactLevel.MEDIO, "ALTA");
+                    ImpactLevel.MEDIO, "MEDIA");
             createRuleIfMissing(priorityRuleRepository, priorityRepository, ImpactLevel.MEDIO,
                     ImpactLevel.ALTO, "ALTA");
             createRuleIfMissing(priorityRuleRepository, priorityRepository, ImpactLevel.ALTO,
-                    ImpactLevel.BAJO, "ALTA");
+                    ImpactLevel.BAJO, "MEDIA");
             createRuleIfMissing(priorityRuleRepository, priorityRepository, ImpactLevel.ALTO,
-                    ImpactLevel.MEDIO, "CRITICA");
+                    ImpactLevel.MEDIO, "ALTA");
             createRuleIfMissing(priorityRuleRepository, priorityRepository, ImpactLevel.ALTO,
                     ImpactLevel.ALTO, "CRITICA");
 

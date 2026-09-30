@@ -2,8 +2,10 @@ package com.gruponorte.mesaayudati.service;
 
 import com.gruponorte.mesaayudati.dto.UserRequest;
 import com.gruponorte.mesaayudati.dto.UserResponse;
+import com.gruponorte.mesaayudati.dto.TechnicianOptionResponse;
 import com.gruponorte.mesaayudati.entity.AppUser;
 import com.gruponorte.mesaayudati.entity.Area;
+import com.gruponorte.mesaayudati.entity.UserRole;
 import com.gruponorte.mesaayudati.repository.AreaRepository;
 import com.gruponorte.mesaayudati.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -34,6 +36,14 @@ public class UserService {
     @Transactional(readOnly = true)
     public List<UserResponse> listar() {
         return userRepository.findAll().stream().map(this::toResponse).toList();
+    }
+
+    /** Devuelve solo la información mínima de técnicos habilitados. */
+    @Transactional(readOnly = true)
+    public List<TechnicianOptionResponse> listarTecnicos() {
+        return userRepository.findAllByRoleAndEnabledTrueOrderByUsernameAsc(UserRole.TECNICO).stream()
+                .map(account -> new TechnicianOptionResponse(account.getId(), account.getUsername()))
+                .toList();
     }
 
     public UserResponse crear(UserRequest request) {

@@ -59,7 +59,7 @@ public class SecurityConfig {
     /** Carga la cuenta y su rol desde la base de datos al autenticar. */
     @Bean
     UserDetailsService userDetailsService(UserRepository userRepository) {
-        return username -> userRepository.findByUsernameIgnoreCase(username)
+        return username -> userRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(username, username)
                 .map(account -> User.withUsername(account.getUsername())
                         .password(account.getPasswordHash())
                         .authorities("ROLE_" + account.getRole().name())

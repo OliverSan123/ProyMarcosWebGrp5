@@ -27,6 +27,7 @@ const slaHours = { Crítica: 4, Alta: 8, Media: 24, Baja: 72 };
 const priorityMatrix = { 'Alto-Alta': 'Crítica', 'Alto-Media': 'Alta', 'Alto-Baja': 'Media', 'Medio-Alta': 'Alta', 'Medio-Media': 'Media', 'Medio-Baja': 'Baja', 'Bajo-Alta': 'Media', 'Bajo-Media': 'Baja', 'Bajo-Baja': 'Baja' };
 let tickets = JSON.parse(localStorage.getItem('gnTickets') || 'null') || defaultTickets;
 let selectedTicketId = null;
+const API_BASE_URL = window.API_BASE_URL || 'http://localhost:8080';
 
 // Función reutilizable para seleccionar elementos del Modelo de Objetos.
 const byId = (id) => document.getElementById(id);
@@ -92,17 +93,72 @@ function openManagement(ticketId) {
 // Inicializa eventos según la vista actual: login o dashboard.
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = byId('loginForm');
-  // Lógica del login: validar datos y guardar el usuario si se marca recordarme.
+  const logoutButton = byId('logoutButton');
+  if (logoutButton) {
+    logoutButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      sessionStorage.removeItem('gnAccessToken');
+      sessionStorage.removeItem('gnRole');
+      sessionStorage.removeItem('gnUser');
+      window.location.replace('login.html');
+    });
+  }
+
+  // El campo de usuario puede recordarse, pero el token no se guarda permanentemente.
   if (loginForm) {
     const savedUser = localStorage.getItem('gnUser');
     if (savedUser) { byId('user').value = savedUser; byId('remember').checked = true; }
     byId('togglePassword').addEventListener('click', () => { const input = byId('password'); input.type = input.type === 'password' ? 'text' : 'password'; });
-    loginForm.addEventListener('submit', (event) => { event.preventDefault(); if (!loginForm.checkValidity()) { loginForm.classList.add('was-validated'); return; } if (byId('remember').checked) localStorage.setItem('gnUser', byId('user').value); else localStorage.removeItem('gnUser'); window.location.href = 'dashboard.html'; });
+    loginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!loginForm.checkValidity()) { loginForm.classList.add('was-validated'); return; }
+
+      const submitButton = loginForm.querySelector('button[type="submit"]');
+      const message = byId('loginMessage');
+      submitButton.disabled = true;
+      submitButton.textContent = 'Verificando...';
+      message.classList.add('d-none');
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: byId('user').value.trim(),
+            password: byId('password').value
+          })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || result.message || 'No se pudo iniciar sesión.');
+        if (!result.accessToken) throw new Error('El servidor no devolvió un token de acceso.');
+
+        sessionStorage.setItem('gnAccessToken', result.accessToken);
+        sessionStorage.setItem('gnRole', result.role);
+        sessionStorage.setItem('gnUser', result.username);
+        if (byId('remember').checked) localStorage.setItem('gnUser', result.username);
+        else localStorage.removeItem('gnUser');
+        window.location.href = 'dashboard.html';
+      } catch (error) {
+        message.textContent = error instanceof TypeError
+          ? 'No se pudo conectar con Spring. Comprueba que el backend esté iniciado.'
+          : error.message;
+        message.classList.remove('d-none');
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Ingresar al sistema';
+      }
+    });
     return;
   }
 
   // Si no existe la tabla, no seguimos con la lógica del dashboard.
   if (!byId('tablaTickets')) return;
+
+  // Evita navegar al dashboard sin iniciar sesión; la API también valida el JWT.
+  if (!sessionStorage.getItem('gnAccessToken')) {
+    window.location.replace('login.html');
+    return;
+  }
 
   // Escuchamos cambios en los filtros y la búsqueda para actualizar la tabla en vivo.
   ['searchTicket', 'filtroPrioridad', 'filtroEstado', 'filtroArea'].forEach((id) => byId(id).addEventListener(id === 'searchTicket' ? 'input' : 'change', renderTickets));
