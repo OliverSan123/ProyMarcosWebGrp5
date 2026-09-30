@@ -26,6 +26,7 @@ const statusLabels = {
   CERRADO: 'Cerrado', REABIERTO: 'Reabierto'
 };
 const priorityLabels = { CRITICA: 'Crítica', ALTA: 'Alta', MEDIA: 'Media', BAJA: 'Baja' };
+const priorityClasses = { 'Crítica': 'priority-critical', Alta: 'priority-high', Media: 'priority-medium', Baja: 'priority-low' };
 const impactLabels = { ALTO: 'Alto', MEDIO: 'Medio', BAJO: 'Bajo' };
 const roleLabels = { ADMINISTRADOR: 'Administrador', COORDINADOR: 'Coordinador', TECNICO: 'Técnico', SOLICITANTE: 'Solicitante' };
 
@@ -104,13 +105,14 @@ function toDisplayTicket(ticket) {
 }
 
 function badge(text, type) {
-  const colors = type === 'priority'
-    ? { 'Crítica': 'text-bg-danger', Alta: 'text-bg-warning', Media: 'text-bg-info', Baja: 'text-bg-success' }
-    : {
-      Nuevo: 'text-bg-primary', Asignado: 'text-bg-info', 'En atención': 'text-bg-warning',
-      'Pendiente usuario': 'text-bg-secondary', Resuelto: 'text-bg-success',
-      Cerrado: 'text-bg-dark', Reabierto: 'text-bg-primary'
-    };
+  if (type === 'priority') {
+    return `<span class="badge priority-badge ${priorityClasses[text] || 'priority-unknown'}">${escapeHTML(text)}</span>`;
+  }
+  const colors = {
+    Nuevo: 'text-bg-primary', Asignado: 'text-bg-info', 'En atención': 'text-bg-warning',
+    'Pendiente usuario': 'text-bg-secondary', Resuelto: 'text-bg-success',
+    Cerrado: 'text-bg-dark', Reabierto: 'text-bg-primary'
+  };
   return `<span class="badge ${colors[text] || 'text-bg-secondary'}">${escapeHTML(text)}</span>`;
 }
 
@@ -193,7 +195,10 @@ function renderPriorityMatrix() {
   document.querySelectorAll('[data-impact][data-urgency]').forEach((cell) => {
     const rule = priorityRules.find((item) =>
       item.impact === cell.dataset.impact && item.urgency === cell.dataset.urgency);
-    cell.textContent = rule ? displayPriority(rule.priority) : 'Sin regla';
+    const label = rule ? displayPriority(rule.priority) : 'Sin regla';
+    cell.textContent = label;
+    cell.classList.remove('priority-text', ...Object.values(priorityClasses), 'priority-unknown');
+    cell.classList.add('priority-text', priorityClasses[label] || 'priority-unknown');
   });
 }
 
@@ -220,7 +225,7 @@ function renderPriorityRules() {
     <tr>
       <td>${escapeHTML(impactLabels[rule.impact])}</td>
       <td>${escapeHTML(impactLabels[rule.urgency])}</td>
-      <td>${escapeHTML(displayPriority(rule.priority))}</td>
+      <td><span class="priority-text ${priorityClasses[displayPriority(rule.priority)] || 'priority-unknown'}">${escapeHTML(displayPriority(rule.priority))}</span></td>
       <td class="text-end text-nowrap"><button class="btn btn-sm btn-outline-primary edit-rule" type="button" data-rule-id="${rule.id}">Editar</button> <button class="btn btn-sm btn-outline-danger delete-rule" type="button" data-rule-id="${rule.id}">Eliminar</button></td>
     </tr>`).join('') || '<tr><td colspan="4" class="text-secondary">Sin reglas configuradas.</td></tr>';
 }

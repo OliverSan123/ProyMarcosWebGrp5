@@ -92,6 +92,50 @@ body {
     font-weight: 600;
 }
 
+.priority-badge {
+    border: 1px solid currentColor;
+}
+
+.priority-text {
+    font-weight: 700;
+}
+
+.table .priority-critical {
+    color: #b42318;
+}
+
+.priority-badge.priority-critical {
+    background: #fde8e7;
+}
+
+.table .priority-high {
+    color: #c2410c;
+}
+
+.priority-badge.priority-high {
+    background: #fff0e6;
+}
+
+.table .priority-medium {
+    color: #946c00;
+}
+
+.priority-badge.priority-medium {
+    background: #fff6cc;
+}
+
+.table .priority-low {
+    color: #18743a;
+}
+
+.priority-badge.priority-low {
+    background: #e5f5e9;
+}
+
+.table .priority-unknown {
+    color: #526170;
+}
+
 .btn-primary {
     background: var(--gn-blue);
     border-color: var(--gn-blue);
