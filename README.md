@@ -2,7 +2,7 @@
 Trabajo que forma parte del curso de Marcos de Desarrollo Web (S. 34836)
 <br>
 <h3>Alumnos:</h3>
-Carrasco Camayo, Luis Rolando (u24270221)<br>
+Carrasco Camayo, Luis Rolando (U24270221)<br>
 Limaylla Alatta, Gonzalo Sebastian (U24265865)<br>
 Luna Timana, Maria Fernanda (U24260258)<br>
 Morales Castillo, Marci (U24226390)<br>
