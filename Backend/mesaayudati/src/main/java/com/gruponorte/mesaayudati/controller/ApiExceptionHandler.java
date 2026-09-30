@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 // Comentario
-
+// buonasera
 /** Convierte errores esperados a JSON legible y evita filtrar detalles internos. */
 @RestControllerAdvice
 public class ApiExceptionHandler {
