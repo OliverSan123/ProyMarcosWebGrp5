@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+// Comentario
 
 /** Convierte errores esperados a JSON legible y evita filtrar detalles internos. */
 @RestControllerAdvice
