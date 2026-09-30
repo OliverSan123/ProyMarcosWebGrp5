@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-/** Crea prioridades SLA base y un administrador inicial solo si se configura su contraseña. */
+/** Crea catálogos base y cuentas de prueba cuando se configura su contraseña. */
 @Configuration
 public class InitialDataSeeder {
 
@@ -26,7 +26,9 @@ public class InitialDataSeeder {
             PasswordEncoder passwordEncoder,
             @Value("${app.bootstrap-admin.username}") String adminUsername,
             @Value("${app.bootstrap-admin.email}") String adminEmail,
-            @Value("${app.bootstrap-admin.password}") String adminPassword) {
+            @Value("${app.bootstrap-admin.password}") String adminPassword,
+            @Value("${app.bootstrap-test-users.password}") String testUsersPassword,
+            @Value("${app.bootstrap-test-users.reset-existing}") boolean resetExistingUsers) {
         return args -> {
             createPriorityIfMissing(priorityRepository, "CRITICA", 4);
             createPriorityIfMissing(priorityRepository, "ALTA", 8);
@@ -53,6 +55,29 @@ public class InitialDataSeeder {
             createRuleIfMissing(priorityRuleRepository, priorityRepository, ImpactLevel.ALTO,
                     ImpactLevel.ALTO, "CRITICA");
 
+            if (resetExistingUsers && testUsersPassword.isBlank()) {
+                throw new IllegalStateException(
+                        "Configura INITIAL_TEST_USERS_PASSWORD antes de desactivar las cuentas existentes");
+            }
+            if (!testUsersPassword.isBlank()) {
+                if (testUsersPassword.length() < 8) {
+                    throw new IllegalStateException("INITIAL_TEST_USERS_PASSWORD debe tener al menos 8 caracteres");
+                }
+                if (resetExistingUsers) {
+                    var existingUsers = userRepository.findAll();
+                    existingUsers.forEach(account -> account.setEnabled(false));
+                    userRepository.saveAll(existingUsers);
+                }
+                createOrUpdateTestUser(userRepository, passwordEncoder, "admin.prueba",
+                        "admin.prueba@local.test", UserRole.ADMINISTRADOR, testUsersPassword);
+                createOrUpdateTestUser(userRepository, passwordEncoder, "coordinador.prueba",
+                        "coordinador.prueba@local.test", UserRole.COORDINADOR, testUsersPassword);
+                createOrUpdateTestUser(userRepository, passwordEncoder, "tecnico.prueba",
+                        "tecnico.prueba@local.test", UserRole.TECNICO, testUsersPassword);
+                createOrUpdateTestUser(userRepository, passwordEncoder, "solicitante.prueba",
+                        "solicitante.prueba@local.test", UserRole.SOLICITANTE, testUsersPassword);
+            }
+
             // No se crea una cuenta administrativa con una contraseña por defecto insegura.
             if (!adminPassword.isBlank() && !userRepository.existsByUsernameIgnoreCase(adminUsername)) {
                 AppUser admin = new AppUser();
@@ -65,6 +90,17 @@ public class InitialDataSeeder {
             }
         };
     }
+
+        private void createOrUpdateTestUser(UserRepository repository, PasswordEncoder passwordEncoder,
+                                                                                String username, String email, UserRole role, String password) {
+                AppUser account = repository.findByUsernameIgnoreCase(username).orElseGet(AppUser::new);
+                account.setUsername(username);
+                account.setEmail(email);
+                account.setPasswordHash(passwordEncoder.encode(password));
+                account.setRole(role);
+                account.setEnabled(true);
+                repository.save(account);
+        }
 
     private void createPriorityIfMissing(PriorityRepository repository, String name, int slaHours) {
         if (repository.existsByNameIgnoreCase(name)) return;

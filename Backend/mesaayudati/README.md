@@ -7,11 +7,21 @@ API REST con Spring Boot, Java 21, Spring Security, JWT y JPA. No utiliza Thymel
 Se necesita Java 21 y Maven instalado. Desde esta carpeta:
 
 ```powershell
-$env:INITIAL_ADMIN_PASSWORD = "elige-una-clave-local"
-mvn spring-boot:run
+$env:INITIAL_TEST_USERS_PASSWORD = "elige-una-clave-local-de-8-caracteres"
+$env:RESET_EXISTING_USERS = "true"
+.\mvnw.cmd spring-boot:run
 ```
 
-La primera ejecución crea las prioridades y la matriz base. Si se configura `INITIAL_ADMIN_PASSWORD`, también crea el usuario inicial `admin`; cambia el nombre o correo con `INITIAL_ADMIN_USERNAME` y `INITIAL_ADMIN_EMAIL`. No se crea un administrador con una contraseña predeterminada.
+La primera ejecución crea las prioridades, la matriz base y cuatro cuentas de prueba. `RESET_EXISTING_USERS=true` desactiva las cuentas que ya existan sin borrar usuarios, tickets ni historial; úsala solo una vez. Después de esa ejecución, quita esa variable antes de volver a iniciar el backend. Las cuentas desactivadas y sus JWT dejan de tener acceso. La contraseña configurada en `INITIAL_TEST_USERS_PASSWORD` debe tener al menos 8 caracteres y se comparte entre estas cuentas:
+
+| Usuario | Rol | Contraseña |
+| --- | --- | --- |
+| `admin.prueba` | `ADMINISTRADOR` | Valor de `INITIAL_TEST_USERS_PASSWORD` |
+| `coordinador.prueba` | `COORDINADOR` | Valor de `INITIAL_TEST_USERS_PASSWORD` |
+| `tecnico.prueba` | `TECNICO` | Valor de `INITIAL_TEST_USERS_PASSWORD` |
+| `solicitante.prueba` | `SOLICITANTE` | Valor de `INITIAL_TEST_USERS_PASSWORD` |
+
+Son credenciales exclusivamente locales/de prueba; no las uses en producción. Si no configuras `INITIAL_TEST_USERS_PASSWORD`, no se crean ni se modifican estas cuentas. También puedes crear un administrador separado con `INITIAL_ADMIN_PASSWORD`; cambia su nombre o correo con `INITIAL_ADMIN_USERNAME` y `INITIAL_ADMIN_EMAIL`.
 
 Para probar la web integrada, inicia también Live Server desde el `index.html` de la raíz del repositorio. Debe usar `http://localhost:5500` o `http://127.0.0.1:5500`; el frontend ya usa `http://localhost:8080` como dirección local de la API.
 

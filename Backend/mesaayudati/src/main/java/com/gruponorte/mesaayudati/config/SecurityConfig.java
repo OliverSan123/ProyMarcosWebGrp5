@@ -20,9 +20,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
+import org.springframework.security.oauth2.core.OAuth2Error;
+import org.springframework.security.oauth2.core.OAuth2TokenValidator;
+import org.springframework.security.oauth2.core.OAuth2TokenValidatorResult;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
@@ -97,8 +103,18 @@ public class SecurityConfig {
     }
 
     @Bean
-    JwtDecoder jwtDecoder(SecretKey jwtSecretKey) {
-        return NimbusJwtDecoder.withSecretKey(jwtSecretKey).macAlgorithm(MacAlgorithm.HS256).build();
+        JwtDecoder jwtDecoder(SecretKey jwtSecretKey, UserRepository userRepository) {
+        NimbusJwtDecoder decoder = NimbusJwtDecoder.withSecretKey(jwtSecretKey)
+            .macAlgorithm(MacAlgorithm.HS256).build();
+        OAuth2TokenValidator<Jwt> enabledAccountValidator = jwt -> userRepository
+            .findByUsernameIgnoreCase(jwt.getSubject())
+            .filter(account -> account.isEnabled())
+            .map(account -> OAuth2TokenValidatorResult.success())
+            .orElseGet(() -> OAuth2TokenValidatorResult.failure(
+                new OAuth2Error("invalid_token", "La cuenta está desactivada o no existe", null)));
+        decoder.setJwtValidator(new DelegatingOAuth2TokenValidator<>(
+            JwtValidators.createDefault(), enabledAccountValidator));
+        return decoder;
     }
 
     /** Convierte el claim roles del token en autoridades comprobables por Spring. */
