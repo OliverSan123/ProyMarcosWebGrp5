@@ -11,8 +11,8 @@
 	<groupId>com.gruponorte</groupId>
 	<artifactId>mesaayudati</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
+	<name>Mesa de Ayuda TI - Grupo 5</name>
+	<description>Mesa de ayuda con tickets, prioridad, SLA y API REST por capas</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -63,7 +63,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -88,7 +88,16 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+		            <!-- Mockito se carga al arrancar Java 21; no necesita auto-adjuntarse al proceso. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-javaagent:"${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar"</argLine>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
 </project>
+

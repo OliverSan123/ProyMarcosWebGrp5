@@ -1,5 +1,6 @@
 package com.gruponorte.mesaayudati.entity;
 
+import jakarta.validation.constraints.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ public class Area {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 100)
+    @NotBlank @Size(max = 100)
     private String name;
 
     public Area() {

@@ -1,69 +1,49 @@
 # Mesa de Ayuda TI
 
-API REST desarrollada con Spring Boot y Java 21. Permite al frontend autenticar usuarios y gestionar catálogos y tickets.
+API REST en Spring Boot 4 y Java 21 para autenticar usuarios y gestionar catálogos y tickets. La persistencia de la aplicación usa MySQL mediante Spring Data JPA e Hibernate. H2 se utiliza únicamente en las pruebas automatizadas.
 
 ## Requisitos
 
-- Java 21
-- PowerShell
-- Live Server en Visual Studio Code para abrir el frontend
-
-Comprueba la versión de Java con:
-
-```powershell
-java -version
-```
+- JDK 21 o compatible
+- MySQL Server activo
+- La base `mesaayudati`, creada con `../../database/crear-base-mysql.sql`
+- PowerShell y Live Server para abrir el frontend
 
 ## Iniciar el sistema
 
-1. Abre PowerShell en la carpeta raíz del repositorio y entra al backend:
+Desde la raíz del repositorio, ejecuta:
 
-	```powershell
-	cd .\Backend\mesaayudati
-	```
+```powershell
+cd .\Backend\mesaayudati
+$env:DB_URL = "jdbc:mysql://localhost:3306/mesaayudati"
+$env:DB_USERNAME = "root"
+$env:DB_PASSWORD = "TU_CLAVE_MYSQL"
+$env:INITIAL_TEST_USERS_PASSWORD = "UnaClaveLocalSegura"
+.\mvnw.cmd spring-boot:run
+```
 
-2. En el primer inicio, configura la contraseña de las cuentas de prueba y arranca Spring Boot:
+Spring crea o actualiza las tablas en MySQL al iniciar. La API queda en `http://localhost:8080`. Configura esas variables con los datos de tu instalación; no guardes contraseñas reales en el repositorio.
 
-	```powershell
-	$env:INITIAL_TEST_USERS_PASSWORD = "NuevaClave123"
-	.\mvnw.cmd spring-boot:run
-	```
+Abre `index.html` desde Live Server, normalmente en `http://localhost:5500`. El backend y Live Server deben permanecer activos mientras utilizas la aplicación.
 
-	Spring inicia la API en `http://localhost:8080`. Mantén esta terminal abierta mientras utilizas el sistema.
+Las cuentas de demostración (`admin.prueba`, `coordinador.prueba`, `tecnico.prueba` y `solicitante.prueba`) se crean o actualizan cuando se define `INITIAL_TEST_USERS_PASSWORD`. Esa variable solo se necesita para inicializarlas o sincronizar su contraseña.
 
-3. Abre el archivo `index.html` de la raíz del repositorio con Live Server. La dirección habitual es `http://localhost:5500`.
+## Flujo principal
 
-El backend y Live Server son procesos separados; ambos deben estar activos para probar la aplicación web. Para detener Spring Boot, pulsa `Ctrl+C` en su terminal.
+1. Inicia sesión como administrador y crea un área, una categoría y los usuarios necesarios.
+2. Inicia sesión como solicitante y registra un ticket.
+3. El coordinador asigna un técnico.
+4. El técnico actualiza el estado y registra comentarios.
+5. El solicitante consulta el historial y puede reabrir un ticket resuelto o cerrado con un motivo.
 
-En los siguientes inicios, arranca Spring con el comando anterior sin volver a definir la contraseña. Si reutilizas la misma terminal, ejecuta primero `Remove-Item Env:INITIAL_TEST_USERS_PASSWORD`.
+El servidor valida los DTO con Bean Validation (`@Valid`), comprueba las relaciones antes de guardar y devuelve errores JSON controlados. Hibernate persiste las entidades y sus claves foráneas en MySQL.
 
-## Credenciales de prueba
+## Pruebas
 
-Las cuatro cuentas utilizan la misma contraseña local:
+```powershell
+.\mvnw.cmd test
+```
 
-| Usuario | Rol | Contraseña |
-| --- | --- | --- |
-| `admin.prueba` | Administrador | `NuevaClave123` |
-| `coordinador.prueba` | Coordinador | `NuevaClave123` |
-| `tecnico.prueba` | Técnico | `NuevaClave123` |
-| `solicitante.prueba` | Solicitante | `NuevaClave123` |
+Las pruebas usan H2 en memoria aislada; la aplicación ejecutada normalmente solo usa MySQL. La configuración detallada está en `../../docs/GUIA_EJECUCION.md`.
 
-Estas credenciales son para pruebas locales; no deben utilizarse en producción. Para cambiar la contraseña inicial, modifica `INITIAL_TEST_USERS_PASSWORD` antes del primer inicio.
-
-## Prueba del flujo
-
-1. Inicia sesión como `admin.prueba`.
-2. Crea un área y una categoría en Administración. Las prioridades y sus reglas ya están precargadas.
-3. Crea usuarios para coordinador, técnico y solicitante, y asigna un área a cada uno.
-4. Inicia sesión como el solicitante creado y registra un ticket.
-5. Inicia sesión como el coordinador y asigna el ticket al técnico.
-6. Inicia sesión como el técnico para actualizar el estado y añadir comentarios.
-7. Regresa al usuario solicitante para consultar el historial o reabrir el ticket.
-
-El backend calcula la prioridad y el SLA según el impacto y la urgencia del ticket.
-
-## Datos y despliegue
-
-En local, la aplicación utiliza una base de datos H2 persistente en `Backend/mesaayudati/data/mesaayudati`. Los datos se conservan al detener y volver a iniciar Spring Boot.
-
-GitHub Pages publica archivos estáticos y no ejecuta esta API Java. Para publicar el sistema completo, despliega el backend en un servicio con HTTPS, configura una base de datos y actualiza `API_BASE_URL` en `Frontend/App/config.js`. No publiques las credenciales de prueba ni uses `localhost` como dirección del backend público.
+GitHub Pages solo publica el frontend. Para desplegar el sistema completo se requiere un backend Java, una base MySQL, variables de entorno seguras y actualizar `API_BASE_URL` en `Frontend/App/config.js`.

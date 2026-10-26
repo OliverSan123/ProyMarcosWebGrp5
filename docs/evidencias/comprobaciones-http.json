@@ -1,0 +1,131 @@
+{
+  "resultado": "OK",
+  "comprobaciones": 25,
+  "pruebas": [
+    {
+      "prueba": "Sin token",
+      "estado": 401,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Clave incorrecta",
+      "estado": 401,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Login admin",
+      "estado": 200,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Login coordinador",
+      "estado": 200,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Login tecnico",
+      "estado": 200,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Login solicitante",
+      "estado": 200,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Crear área",
+      "estado": 201,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Crear categoría",
+      "estado": 201,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Consulta individual",
+      "estado": 200,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Duplicado normalizado",
+      "estado": 409,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "SLA inválido",
+      "estado": 400,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Nombre prioridad largo",
+      "estado": 400,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Sin permiso de administración",
+      "estado": 403,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Usuario duplicado con espacios",
+      "estado": 409,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Crear ticket",
+      "estado": 201,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Categoría en uso no se elimina",
+      "estado": 409,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Categoría conservada tras conflicto",
+      "estado": 200,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Listar técnicos",
+      "estado": 200,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Asignar técnico",
+      "estado": 200,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Estado EN_ATENCION",
+      "estado": 200,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Estado RESUELTO",
+      "estado": 200,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Cerrar resuelto",
+      "estado": 200,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Reabrir con motivo",
+      "estado": 200,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "Consultar historial",
+      "estado": 200,
+      "resultado": "OK"
+    },
+    {
+      "prueba": "ID no numérico",
+      "estado": 400,
+      "resultado": "OK"
+    }
+  ]
+}

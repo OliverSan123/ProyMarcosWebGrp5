@@ -11,3 +11,13 @@ Sanchez Figueroa, Olivert Carack (U24271114)
 <br>
 <h3>Docente:</h3> Huamani Uriarte, Enrique Lee (C28642)
 <h3>Universidad Tecnológica del Perú. 2026.</h3> 
+
+## Último avance adaptado a la plantilla Proyecto
+
+- [Cambios realizados](docs/CAMBIOS.md)
+- [Requisitos funcionales y no funcionales](docs/REQUISITOS.md)
+- [Cómo ejecutar y presentar](docs/GUIA_EJECUCION.md)
+- [Resultados de pruebas](docs/RESULTADOS_PRUEBAS.md)
+- [Ejemplos HTTP](docs/pruebas-api.http)
+
+Se conserva el sistema de mesa de ayuda del grupo y se adapta el patrón REST/JPA/DTO/pruebas de la plantilla de productos.

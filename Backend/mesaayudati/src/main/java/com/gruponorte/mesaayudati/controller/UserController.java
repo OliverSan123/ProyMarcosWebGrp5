@@ -34,6 +34,10 @@ public class UserController {
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public List<UserResponse> listar() { return userService.listar(); }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRADOR')")
+    public UserResponse obtener(@PathVariable Long id) { return userService.obtener(id); }
+
     /** Lista mínima de técnicos para los filtros y asignaciones de la bandeja. */
     @GetMapping("/tecnicos")
     @PreAuthorize("isAuthenticated()")

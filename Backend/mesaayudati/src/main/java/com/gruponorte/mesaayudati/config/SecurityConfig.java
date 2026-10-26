@@ -108,12 +108,13 @@ public class SecurityConfig {
             .macAlgorithm(MacAlgorithm.HS256).build();
         OAuth2TokenValidator<Jwt> enabledAccountValidator = jwt -> userRepository
             .findByUsernameIgnoreCase(jwt.getSubject())
-            .filter(account -> account.isEnabled())
+            .filter(account -> account.isEnabled()
+                && List.of(account.getRole().name()).equals(jwt.getClaimAsStringList("roles")))
             .map(account -> OAuth2TokenValidatorResult.success())
             .orElseGet(() -> OAuth2TokenValidatorResult.failure(
-                new OAuth2Error("invalid_token", "La cuenta está desactivada o no existe", null)));
+                new OAuth2Error("invalid_token", "La cuenta está desactivada, no existe o cambió de rol", null)));
         decoder.setJwtValidator(new DelegatingOAuth2TokenValidator<>(
-            JwtValidators.createDefault(), enabledAccountValidator));
+            JwtValidators.createDefaultWithIssuer("mesa-ayuda-ti"), enabledAccountValidator));
         return decoder;
     }
 

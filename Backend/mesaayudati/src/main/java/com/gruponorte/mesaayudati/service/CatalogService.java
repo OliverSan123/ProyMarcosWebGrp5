@@ -59,6 +59,29 @@ public class CatalogService {
         return priorityRuleRepository.findAll().stream().map(this::toRuleResponse).toList();
     }
 
+    @Transactional(readOnly = true)
+    public CatalogResponse obtenerArea(Long id) {
+        Area area = areaRepository.findById(id).orElseThrow(() -> notFound("Área"));
+        return response(area.getId(), area.getName(), null);
+    }
+
+    @Transactional(readOnly = true)
+    public CatalogResponse obtenerCategoria(Long id) {
+        Category category = categoryRepository.findById(id).orElseThrow(() -> notFound("Categoría"));
+        return response(category.getId(), category.getName(), null);
+    }
+
+    @Transactional(readOnly = true)
+    public CatalogResponse obtenerPrioridad(Long id) {
+        Priority priority = getPriority(id);
+        return response(priority.getId(), priority.getName(), priority.getSlaHours());
+    }
+
+    @Transactional(readOnly = true)
+    public PriorityRuleResponse obtenerRegla(Long id) {
+        return toRuleResponse(priorityRuleRepository.findById(id).orElseThrow(() -> notFound("Regla")));
+    }
+
     public PriorityRuleResponse crearRegla(PriorityRuleRequest request) {
         if (priorityRuleRepository.existsByImpactAndUrgency(request.impact(), request.urgency())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
@@ -136,9 +159,10 @@ public class CatalogService {
     }
 
     public CatalogResponse crearPrioridad(CatalogRequest request) {
-        if (request.slaHours() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La prioridad requiere slaHours");
+        if (request.slaHours() == null || request.slaHours() < 1) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La prioridad requiere slaHours mayor que cero");
         }
+        validatePriorityName(request.name());
         if (priorityRepository.existsByNameIgnoreCase(request.name().trim())) throw duplicateName();
         Priority priority = new Priority();
         priority.setName(request.name().trim());
@@ -148,9 +172,10 @@ public class CatalogService {
     }
 
     public CatalogResponse actualizarPrioridad(Long id, CatalogRequest request) {
-        if (request.slaHours() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La prioridad requiere slaHours");
+        if (request.slaHours() == null || request.slaHours() < 1) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La prioridad requiere slaHours mayor que cero");
         }
+        validatePriorityName(request.name());
         Priority priority = priorityRepository.findById(id).orElseThrow(() -> notFound("Prioridad"));
         priorityRepository.findByNameIgnoreCase(request.name().trim()).ifPresent(existing -> {
             if (!existing.getId().equals(id)) throw duplicateName();
@@ -163,6 +188,13 @@ public class CatalogService {
 
     public void eliminarPrioridad(Long id) {
         priorityRepository.delete(priorityRepository.findById(id).orElseThrow(() -> notFound("Prioridad")));
+    }
+
+    private void validatePriorityName(String name) {
+        if (name.trim().length() > 30) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "El nombre de prioridad debe tener como máximo 30 caracteres");
+        }
     }
 
     private CatalogResponse response(Long id, String name, Integer slaHours) {

@@ -6,6 +6,6 @@ import jakarta.validation.constraints.Size;
 
 /** Datos para crear o editar un elemento de catálogo. */
 public record CatalogRequest(
-        @NotBlank @Size(max = 100) String name,
-        @Min(1) Integer slaHours) {
+        @NotBlank(message = "El nombre es obligatorio") @Size(max = 100, message = "El nombre admite hasta 100 caracteres") String name,
+        @Min(value = 1, message = "El SLA debe ser mayor que cero") Integer slaHours) {
 }

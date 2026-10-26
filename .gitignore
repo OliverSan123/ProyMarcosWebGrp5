@@ -1,0 +1,5 @@
+# Bases locales H2; el backend de la aplicación usa MySQL.
+/data/*.mv.db
+/data/*.trace.db
+/Backend/mesaayudati/data/*.mv.db
+/Backend/mesaayudati/data/*.trace.db

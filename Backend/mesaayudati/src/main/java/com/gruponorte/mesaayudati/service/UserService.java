@@ -38,6 +38,11 @@ public class UserService {
         return userRepository.findAll().stream().map(this::toResponse).toList();
     }
 
+    @Transactional(readOnly = true)
+    public UserResponse obtener(Long id) {
+        return toResponse(getEntity(id));
+    }
+
     /** Devuelve solo la información mínima de técnicos habilitados. */
     @Transactional(readOnly = true)
     public List<TechnicianOptionResponse> listarTecnicos() {
@@ -47,8 +52,8 @@ public class UserService {
     }
 
     public UserResponse crear(UserRequest request) {
-        if (userRepository.existsByUsernameIgnoreCase(request.username())
-                || userRepository.existsByEmailIgnoreCase(request.email())) {
+        if (userRepository.existsByUsernameIgnoreCase(request.username().trim())
+                || userRepository.existsByEmailIgnoreCase(request.email().trim())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "El usuario o correo ya está registrado");
         }
@@ -59,8 +64,8 @@ public class UserService {
 
     public UserResponse actualizar(Long id, UserRequest request) {
         AppUser account = getEntity(id);
-        if (userRepository.existsByUsernameIgnoreCaseAndIdNot(request.username(), id)
-                || userRepository.existsByEmailIgnoreCaseAndIdNot(request.email(), id)) {
+        if (userRepository.existsByUsernameIgnoreCaseAndIdNot(request.username().trim(), id)
+                || userRepository.existsByEmailIgnoreCaseAndIdNot(request.email().trim(), id)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
                     "El usuario o correo ya está registrado");
         }

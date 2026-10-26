@@ -1,5 +1,6 @@
 package com.gruponorte.mesaayudati.entity;
 
+import jakarta.validation.constraints.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,9 +18,11 @@ public class Priority {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 30)
+    @NotBlank @Size(max = 30)
     private String name;
 
     @Column(nullable = false)
+    @Min(1)
     private int slaHours;
 
     public Priority() {

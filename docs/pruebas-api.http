@@ -1,0 +1,74 @@
+@baseUrl = http://localhost:8080
+@token = REEMPLAZAR_POR_ACCESS_TOKEN
+@categoriaId = 1
+@areaId = 1
+@ticketId = 1
+@tecnicoId = 1
+
+### Login; copiar accessToken en @token. Usar el rol adecuado en cada operación.
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{"username":"admin.prueba","password":"NuevaClave123"}
+
+### Listar categorías (autenticado)
+GET {{baseUrl}}/api/catalogos/categorias
+Authorization: Bearer {{token}}
+
+### Crear categoría (administrador): 201
+POST {{baseUrl}}/api/catalogos/categorias
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"name":"Redes"}
+
+### Consultar categoría por ID: 200 o 404
+GET {{baseUrl}}/api/catalogos/categorias/{{categoriaId}}
+Authorization: Bearer {{token}}
+
+### Actualizar (administrador): 200
+PUT {{baseUrl}}/api/catalogos/categorias/{{categoriaId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"name":"Conectividad"}
+
+### Eliminar una categoría sin referencias (administrador): 204
+DELETE {{baseUrl}}/api/catalogos/categorias/{{categoriaId}}
+Authorization: Bearer {{token}}
+
+### Validación: 400 con details.name
+POST {{baseUrl}}/api/catalogos/categorias
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"name":""}
+
+### Crear ticket (usar token del solicitante y una categoría existente): 201
+POST {{baseUrl}}/api/tickets
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"title":"Sin acceso a red","description":"No puedo acceder al sistema","categoryId":{{categoriaId}},"areaId":{{areaId}},"impact":"ALTO","urgency":"ALTO"}
+
+### Asignar (coordinador)
+PUT {{baseUrl}}/api/tickets/{{ticketId}}/asignacion
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"technicianId":{{tecnicoId}}}
+
+### Atender (técnico asignado)
+PUT {{baseUrl}}/api/tickets/{{ticketId}}/estado
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"state":"EN_ATENCION"}
+
+### Historial (usuario autorizado)
+GET {{baseUrl}}/api/tickets/{{ticketId}}/historial
+Authorization: Bearer {{token}}
+
+### Filtrar tickets
+GET {{baseUrl}}/api/tickets?estado=EN_ATENCION&areaId={{areaId}}
+Authorization: Bearer {{token}}

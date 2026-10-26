@@ -33,6 +33,11 @@ public class CatalogController {
 
     @GetMapping("/areas")
     public List<CatalogResponse> areas() { return catalogService.areas(); }
+    @GetMapping("/areas/{id}")
+    public CatalogResponse obtenerArea(@PathVariable Long id) {
+        return catalogService.obtenerArea(id);
+    }
+
     @PostMapping("/areas")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<CatalogResponse> crearArea(@Valid @RequestBody CatalogRequest request) {
@@ -52,6 +57,11 @@ public class CatalogController {
 
     @GetMapping("/categorias")
     public List<CatalogResponse> categorias() { return catalogService.categorias(); }
+    @GetMapping("/categorias/{id}")
+    public CatalogResponse obtenerCategoria(@PathVariable Long id) {
+        return catalogService.obtenerCategoria(id);
+    }
+
     @PostMapping("/categorias")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<CatalogResponse> crearCategoria(@Valid @RequestBody CatalogRequest request) {
@@ -71,6 +81,11 @@ public class CatalogController {
 
     @GetMapping("/prioridades")
     public List<CatalogResponse> prioridades() { return catalogService.prioridades(); }
+    @GetMapping("/prioridades/{id}")
+    public CatalogResponse obtenerPrioridad(@PathVariable Long id) {
+        return catalogService.obtenerPrioridad(id);
+    }
+
     @PostMapping("/prioridades")
     @PreAuthorize("hasRole('ADMINISTRADOR')")
     public ResponseEntity<CatalogResponse> crearPrioridad(@Valid @RequestBody CatalogRequest request) {
@@ -92,6 +107,11 @@ public class CatalogController {
     /** Matriz configurable que asigna prioridad a cada par impacto/urgencia. */
     @GetMapping("/matriz-prioridad")
     public List<PriorityRuleResponse> matrizPrioridad() { return catalogService.matrizPrioridad(); }
+
+    @GetMapping("/matriz-prioridad/{id}")
+    public PriorityRuleResponse obtenerRegla(@PathVariable Long id) {
+        return catalogService.obtenerRegla(id);
+    }
 
     @PostMapping("/matriz-prioridad")
     @PreAuthorize("hasRole('ADMINISTRADOR')")

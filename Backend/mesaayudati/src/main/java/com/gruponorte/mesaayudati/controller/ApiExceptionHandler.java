@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.validation.ConstraintViolationException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 // Comentario
@@ -49,6 +51,21 @@ public class ApiExceptionHandler {
         return ResponseEntity.badRequest().body(Map.of(
                 "status", 400,
                 "error", "El JSON contiene datos inválidos o un valor no reconocido"));
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidParameter(MethodArgumentTypeMismatchException exception) {
+        return ResponseEntity.badRequest().body(Map.of("status", 400,
+                "error", "Parámetro inválido: " + exception.getName()));
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleConstraint(ConstraintViolationException exception) {
+        Map<String, String> details = new LinkedHashMap<>();
+        exception.getConstraintViolations().forEach(violation ->
+                details.put(violation.getPropertyPath().toString(), violation.getMessage()));
+        return ResponseEntity.badRequest().body(Map.of("status", 400,
+                "error", "Revisa los datos enviados", "details", details));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

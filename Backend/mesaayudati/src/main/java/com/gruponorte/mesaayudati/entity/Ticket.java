@@ -1,5 +1,6 @@
 package com.gruponorte.mesaayudati.entity;
 
+import jakarta.validation.constraints.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,9 +33,11 @@ public class Ticket {
     private Long id;
 
     @Column(nullable = false, length = 150)
+    @NotBlank @Size(max = 150)
     private String title;
 
     @Column(nullable = false, length = 5000)
+    @NotBlank @Size(max = 5000)
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

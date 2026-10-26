@@ -1,15 +1,7 @@
 package com.gruponorte.mesaayudati.controller;
 
-import com.gruponorte.mesaayudati.dto.AssignTechnicianRequest;
-import com.gruponorte.mesaayudati.dto.CommentRequest;
-import com.gruponorte.mesaayudati.dto.ReopenTicketRequest;
-import com.gruponorte.mesaayudati.dto.TicketCreateRequest;
-import com.gruponorte.mesaayudati.dto.TicketHistoryResponse;
-import com.gruponorte.mesaayudati.dto.TicketResponse;
-import com.gruponorte.mesaayudati.dto.TicketStatusRequest;
-import com.gruponorte.mesaayudati.entity.TicketStatus;
-import com.gruponorte.mesaayudati.service.TicketService;
-import jakarta.validation.Valid;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.gruponorte.mesaayudati.dto.AssignTechnicianRequest;
+import com.gruponorte.mesaayudati.dto.CommentRequest;
+import com.gruponorte.mesaayudati.dto.ReopenTicketRequest;
+import com.gruponorte.mesaayudati.dto.TicketCreateRequest;
+import com.gruponorte.mesaayudati.dto.TicketHistoryResponse;
+import com.gruponorte.mesaayudati.dto.TicketResponse;
+import com.gruponorte.mesaayudati.dto.TicketStatusRequest;
+import com.gruponorte.mesaayudati.entity.TicketStatus;
+import com.gruponorte.mesaayudati.service.TicketService;
+
+import jakarta.validation.Valid;
 
 /** API JSON para registro, consulta y flujo de atención de tickets. */
 @RestController

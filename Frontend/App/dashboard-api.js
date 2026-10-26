@@ -49,7 +49,10 @@ async function apiRequest(path, options = {}) {
     window.location.replace('login.html');
     throw new Error('La sesión venció; inicia sesión de nuevo.');
   }
-  if (!response.ok) throw new Error(result?.error || result?.message || `Error HTTP ${response.status}`);
+  if (!response.ok) {
+    const details = result?.details ? Object.values(result.details).join('. ') : '';
+    throw new Error([result?.error || result?.message || ('Error HTTP ' + response.status), details].filter(Boolean).join(': '));
+  }
   return result;
 }
 
